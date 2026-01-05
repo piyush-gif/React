@@ -3,7 +3,6 @@ import TodoList from './TodoList';
 import './App.css'
 
 function App() {
-  let list = [];
   return (
     <div>
       <div>
