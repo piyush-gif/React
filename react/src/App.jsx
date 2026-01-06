@@ -1,16 +1,15 @@
-import { useState } from 'react'
-import TodoList from './TodoList';
-import './App.css'
-
+import TodoList from "./TodoList";
+import "./App.css";
+import NavBar from "./NavBar";
 function App() {
   return (
     <div>
       <div>
-       <TodoList/>
+        <NavBar />
+        <TodoList />
       </div>
     </div>
-
-  )
+  );
 }
 
-export default App
+export default App;
