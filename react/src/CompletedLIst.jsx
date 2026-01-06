@@ -1,11 +1,11 @@
-const CompletedList = ({ completeList, setList, list }) => {
-  // console.log(completeList);
+const CompletedList = ({ completeList, setList, list, setCompleteList }) => {
+  console.log(2);
   const addBack = (id) => {
-    console.log(id);
     let abList = completeList[id];
-    console.log(abList);
-    // abList.completed = true;
-    setList(...list, abList);
+    abList.completed = false;
+    setCompleteList(completeList.filter((li) => li.text != abList.text));
+
+    setList([...list, abList]);
   };
   return (
     <div>

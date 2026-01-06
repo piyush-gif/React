@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CompletedList from "./completedLIst";
 const TodoList = () => {
+  console.log(3);
   const [task, setTask] = useState("");
   const [list, setList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
@@ -28,6 +29,7 @@ const TodoList = () => {
           completeList={completedList}
           setList={setList}
           list={list}
+          setCompleteList={setCompletedList}
         />
         <h1>To-do List</h1>
         <input
