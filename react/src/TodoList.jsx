@@ -7,17 +7,17 @@ const TodoList = () => {
   const [completedList, setCompletedList] = useState([]);
   const [count, setCount] = useState(0);
   const [completeCount, setCompleteCount] = useState(0);
-  // console.log(completedList, 1);
+  const [navcount, setNavCount] = useState(0);
   const addTask = () => {
     setCount(count + 1);
     setList([...list, { text: task, completed: false }]);
     setTask("");
-    <NavBar num={1} />;
+    setNavCount(navcount + 1);
   };
   const deleteTask = (idToDelete) => {
     setList(list.filter((item, index) => index != idToDelete));
     setCount(count - 1);
-    <NavBar num={-1} />;
+    setNavCount(navcount - 1);
   };
 
   const taskStatus = (id) => {
@@ -32,7 +32,7 @@ const TodoList = () => {
   return (
     <div>
       <div>
-        <NavBar num={1} />
+        <NavBar count={navcount} />
         <CompletedList
           completeList={completedList}
           setList={setList}
@@ -43,8 +43,7 @@ const TodoList = () => {
           count={count}
           setCount={setCount}
         />
-        <h1>To-do List</h1>
-        <p>Total Tasks to do: {count}</p>
+        <h1>To-do List : Tasks {count}</h1>
         <input
           type="text"
           value={task}

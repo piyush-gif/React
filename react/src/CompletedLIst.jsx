@@ -19,8 +19,7 @@ const CompletedList = ({
   };
   return (
     <div>
-      <h1>Completed List</h1>
-      <p>Total Completed Tasks : {completeCount} </p>
+      <h1>Completed List : Tasks {completeCount}</h1>
       <div>
         {completeList.map((li, index) => {
           return (
