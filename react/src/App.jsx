@@ -5,7 +5,6 @@ function App() {
   return (
     <div>
       <div>
-        <NavBar />
         <TodoList />
       </div>
     </div>

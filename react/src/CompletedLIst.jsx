@@ -4,17 +4,11 @@ const CompletedList = ({
   list,
   setCompleteList,
   completeCount,
-  setCompleteCount,
-  count,
-  setCount,
 }) => {
   const addBack = (id) => {
-    setCompleteCount(completeCount - 1);
-    setCount(count + 1);
     let abList = completeList[id];
     abList.completed = false;
     setCompleteList(completeList.filter((li) => li.text != abList.text));
-
     setList([...list, abList]);
   };
   return (
