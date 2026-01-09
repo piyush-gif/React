@@ -1,11 +1,12 @@
 import TodoList from "./TodoList";
 import "./App.css";
 import NavBar from "./NavBar";
+import FlashCard from "./FlashCard";
 function App() {
   return (
     <div>
       <div>
-        <TodoList />
+        <FlashCard />
       </div>
     </div>
   );

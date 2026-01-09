@@ -11,16 +11,17 @@ const TodoList = () => {
 
   const addTask = () => {
     setList((prev) => [...prev, { text: task }]);
+    setTask("");
   };
 
   const deleteTask = (idToDelete) => {
-    setList((prev) => prev.filter((_, index) => index != idToDelete));
+    setList((prev) => prev.filter((_, index) => index !== idToDelete));
   };
 
   const taskStatus = (id) => {
     const taskToMove = list[id];
     setCompletedList((prev) => [...prev, taskToMove]);
-    setList((prev) => prev.filter((_, index) => index != id));
+    setList((prev) => prev.filter((_, index) => index !== id));
   };
 
   return (
@@ -30,7 +31,6 @@ const TodoList = () => {
         <CompletedList
           completeList={completedList}
           setList={setList}
-          list={list}
           setCompleteList={setCompletedList}
           completeCount={completeCount}
         />

@@ -1,14 +1,12 @@
 const CompletedList = ({
   completeList,
   setList,
-  list,
   setCompleteList,
   completeCount,
 }) => {
-  console.log(completeList);
   const addBack = (id) => {
     const back = completeList[id];
-    setCompleteList((prev) => prev.filter((_, index) => index != id));
+    setCompleteList((prev) => prev.filter((_, index) => index !== id));
     setList((prev) => [...prev, back]);
   };
   return (
@@ -18,8 +16,7 @@ const CompletedList = ({
         {completeList.map((li, index) => {
           return (
             <p key={index}>
-              {index}
-              {li.text}
+              {index} {li.text}
               <button onClick={() => addBack(index)}>add back</button>
             </p>
           );
