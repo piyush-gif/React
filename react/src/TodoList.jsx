@@ -10,7 +10,7 @@ const TodoList = () => {
   const navcount = count + completeCount;
 
   const addTask = () => {
-    setList((prev) => [...prev, { text: task, completed: false }]);
+    setList((prev) => [...prev, { text: task }]);
   };
 
   const deleteTask = (idToDelete) => {
@@ -46,7 +46,7 @@ const TodoList = () => {
             return (
               <li key={index}>
                 {index}
-                {item.text} {item.completed.toString()}
+                {item.text}
                 <button onClick={() => deleteTask(index)}> Delete</button>
                 <button onClick={() => taskStatus(index)}>Status</button>
               </li>
