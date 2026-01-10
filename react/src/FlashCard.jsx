@@ -1,6 +1,7 @@
 import { useState } from "react";
 const FlashCard = () => {
   const [answer, setAnswer] = useState("");
+  const [question, setQuestion] = useState(1);
   const score = 0;
   const questions = [
     {
@@ -22,38 +23,14 @@ const FlashCard = () => {
       correctAnswer: "6",
     },
   ];
-
-  const checkAnswer = (cA, que_id) => {
-    if (cA == que_id) {
-      setAnswer("Right");
-    } else if (cA != que_id) {
-      setAnswer("wrong");
-    } else {
-      setAnswer("");
-    }
-  };
+  const hello = questions.filter((ques) => ques.id === question);
+  console.log(hello[0].id);
+  const checkAnswer = () => {};
   return (
     <>
       <div>
         <h1>Score: {score}</h1>
-        {questions.map((que, index) => {
-          return (
-            <div key={index}>
-              <p>
-                {que.id} {que.question}
-              </p>
-              {que.options.map((qu, index) => (
-                <button
-                  key={index}
-                  onClick={() => checkAnswer(qu, que.correctAnswer)}
-                >
-                  {qu}
-                </button>
-              ))}
-              {answer}
-            </div>
-          );
-        })}
+        {hello[question].id}
       </div>
     </>
   );
