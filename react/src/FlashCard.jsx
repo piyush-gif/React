@@ -1,9 +1,8 @@
 import { useState } from "react";
 const FlashCard = () => {
-  const [answer, setAnswer] = useState("");
-  const [question, setQuestion] = useState(0);
+  const [question, setQuestion] = useState([]);
   const score = 0;
-  const page = 1;
+  const [page, setPage] = useState();
   const questions = [
     {
       id: 1,
@@ -24,26 +23,37 @@ const FlashCard = () => {
       correctAnswer: "6",
     },
   ];
-  const checkAnswer = () => {};
+
+  const handleClick = () => {
+    if (page <= 3) {
+      page += 1;
+    }
+    console.log(page);
+  };
+  const show = () => {
+    const change = questions.filter((ques) => ques.id === page);
+    setQuestion(change);
+  };
   return (
     <>
       <div>
         <h1>Score: {score}</h1>
-        {questions
-          .filter((question) => question.id == page)
-          .map((ques, index) => {
+        <button onClick={show}>show questions</button>
+        <div>
+          {question.map((ques, index) => {
             return (
               <div key={index}>
                 <p>
-                  {ques.id}. {ques.question}
+                  {ques.id} {ques.question}
                 </p>
                 {ques.options.map((que, index) => {
                   return <button key={index}>{que}</button>;
                 })}
-                <button onClick={page}>Next Question</button>
               </div>
             );
           })}
+        </div>
+        <button onClick={handleClick}>next</button>
       </div>
     </>
   );
