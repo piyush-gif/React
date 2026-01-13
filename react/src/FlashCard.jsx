@@ -1,9 +1,10 @@
 import { useState } from "react";
 const FlashCard = () => {
-  let score = 0;
   const [page, setPage] = useState(1);
-  const [button, setButton] = useState("next");
   const [answer, setAnswer] = useState(null);
+  const [score, setScore] = useState(0);
+  const [quizFinished, setQuizFinished] = useState(false);
+  const [hasAnswered, setHasAnswered] = useState(false);
   const questions = [
     {
       id: 1,
@@ -25,51 +26,77 @@ const FlashCard = () => {
     },
   ];
 
-  const handleClick = () => {
+  const handleNext = () => {
     setAnswer(null);
-    if (page < 3) {
+    setHasAnswered(false);
+    if (page < questions.length) {
       setPage((prev) => prev + 1);
-    } else setButton("submit");
+    } else setQuizFinished(true);
   };
 
   const checkAnswer = (answer, correctAnswer) => {
+    setHasAnswered(true);
     if (answer == correctAnswer) {
       setAnswer({ isCorrect: true });
+      setScore((prev) => prev + 1);
     } else {
       setAnswer({ isCorrect: false });
     }
   };
 
+  const restartQuiz = () => {
+    setAnswer(null);
+    setPage(1);
+    setScore(0);
+    setQuizFinished(false);
+    setHasAnswered(false);
+  };
   return (
     <>
       <div>
-        <h1>Score: {score}</h1>
-        <div>
-          {questions
-            .filter((quest) => quest.id === page)
-            .map((ques, index) => {
-              return (
-                <div key={index}>
-                  <p>
-                    {ques.id} {ques.question}
-                  </p>
-                  {ques.options.map((que, id) => {
-                    return (
-                      <button
-                        key={id}
-                        onClick={() => checkAnswer(que, ques.correctAnswer)}
-                      >
-                        {" "}
-                        {que}
-                      </button>
-                    );
-                  })}
-                  {answer && <p>{answer.isCorrect ? "Right" : "Wrong"}</p>}
-                </div>
-              );
-            })}
-        </div>
-        <button onClick={handleClick}>{button}</button>
+        {!quizFinished ? (
+          <div>
+            <h1>Score: {score}</h1>
+            <div>
+              {questions
+                .filter((quest) => quest.id === page)
+                .map((ques, index) => {
+                  return (
+                    <div key={index}>
+                      <p>
+                        {ques.id} {ques.question}
+                      </p>
+                      {ques.options.map((que, id) => {
+                        return (
+                          <button
+                            key={id}
+                            onClick={() => checkAnswer(que, ques.correctAnswer)}
+                            disabled={hasAnswered}
+                          >
+                            {" "}
+                            {que}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              <div>
+                {" "}
+                {answer && <p>{answer.isCorrect ? "Right!" : `Wrong!`}</p>}
+              </div>
+            </div>
+            <button onClick={handleNext}>next</button>
+          </div>
+        ) : (
+          <div>
+            <h1>Quiz Complete!</h1>
+            <h2>
+              Final Score: {score}/{questions.length}
+            </h2>
+            <button onClick={restartQuiz}>Restart</button>
+          </div>
+        )}
       </div>
     </>
   );
