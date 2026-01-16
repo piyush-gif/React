@@ -1,6 +1,5 @@
 import { useState } from "react";
 import CompletedList from "./CompletedLIst";
-import NavBar from "./NavBar";
 const TodoList = () => {
   const [task, setTask] = useState("");
   const [list, setList] = useState([]);
@@ -27,7 +26,6 @@ const TodoList = () => {
   return (
     <div>
       <div>
-        <NavBar count={navcount} />
         <CompletedList
           completeList={completedList}
           setList={setList}

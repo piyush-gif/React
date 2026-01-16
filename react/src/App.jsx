@@ -3,13 +3,17 @@ import "./App.css";
 import NavBar from "./NavBar";
 import FlashCard from "./FlashCard";
 import SimpleApi from "./SimpleApi";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 function App() {
   return (
-    <div>
-      <div>
-        <SimpleApi />
-      </div>
-    </div>
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<TodoList />} />
+        <Route path="/questions" element={<FlashCard />} />
+        <Route path="/characters" element={<SimpleApi />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
