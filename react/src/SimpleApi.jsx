@@ -6,6 +6,15 @@ const SimpleApi = () => {
   const [charInfo, setCharInfo] = useState(null);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
+  const startPage = (currentPage - 1) * itemsPerPage;
+  const endPage = startPage + itemsPerPage;
+  const [statusFilter, setStatusFilter] = useState("all");
+  const filteredCharacters =
+    statusFilter === "all"
+      ? characters
+      : characters.filter((char) => char.status.toLowerCase() === statusFilter);
+  const pagination = filteredCharacters.slice(startPage, endPage);
 
   const fetchapi = async (url) => {
     try {
@@ -31,6 +40,7 @@ const SimpleApi = () => {
   };
   const handleSearch = async () => {
     if (search === "") return;
+    setCurrentPage(1);
     fetchapi(`https://rickandmortyapi.com/api/character/?name=${search}`);
   };
 
@@ -44,9 +54,30 @@ const SimpleApi = () => {
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       ></input>
       <button onClick={handleSearch}>search</button>
+      <button
+        onClick={() => setCurrentPage((prev) => prev - 1)}
+        disabled={currentPage === 1}
+      >
+        previous
+      </button>
+
+      <button
+        onClick={() => setCurrentPage((prev) => prev + 1)}
+        disabled={endPage >= filteredCharacters.length}
+      >
+        next
+      </button>
+      <select
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value)}
+      >
+        <option value="all"> All</option>
+        <option value="alive">Alive</option>
+        <option value="dead">Dead</option>
+      </select>
       {!loading && !error && characters && (
         <div>
-          {characters.map((char) => {
+          {pagination.map((char) => {
             return (
               <div key={char.id}>
                 <img src={char.image} alt={char.name} />
