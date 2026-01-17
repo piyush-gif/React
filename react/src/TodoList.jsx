@@ -9,6 +9,7 @@ const TodoList = () => {
   const navcount = count + completeCount;
 
   const addTask = () => {
+    if (task === "") return;
     setList((prev) => [...prev, { text: task }]);
     setTask("");
   };
@@ -37,6 +38,7 @@ const TodoList = () => {
           type="text"
           value={task}
           onChange={(e) => setTask(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && addTask()}
         ></input>
         <button onClick={() => addTask()}>Add</button>
         <ul>
