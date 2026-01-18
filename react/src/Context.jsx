@@ -1,7 +1,3 @@
-import { createContext, useContext, useState } from "react";
+import { createContext } from "react";
 
-const CountContext = createContext();
-
-export const CountProvider = ({ childern }) => {
-  const [navCount, setNavCount] = useContext(0);
-};
+export const Context = createContext();

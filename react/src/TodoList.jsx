@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { Context } from "./Context";
 import CompletedList from "./CompletedLIst";
 const TodoList = () => {
   const [task, setTask] = useState("");
@@ -6,7 +7,11 @@ const TodoList = () => {
   const [completedList, setCompletedList] = useState([]);
   const count = list.length;
   const completeCount = completedList.length;
-  const navcount = count + completeCount;
+  const { navCount, setNavCount } = useContext(Context);
+
+  useEffect(() => {
+    setNavCount(count + completeCount);
+  }, [count, completeCount, setNavCount]);
 
   const addTask = () => {
     if (task === "") return;
