@@ -4,7 +4,7 @@ import { useContext } from "react";
 const NavBar = ({ count }) => {
   const { navCount, setNavCount } = useContext(Context);
   return (
-    <nav>
+    <nav className="nav">
       <Link to="/">Home</Link>
       <Link to="/questions">Questions</Link>
       <Link to="/characters">characters</Link>

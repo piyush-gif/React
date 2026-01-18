@@ -1,12 +1,12 @@
 import TodoList from "./TodoList";
-import "./App.css";
 import NavBar from "./NavBar";
 import FlashCard from "./FlashCard";
 import SimpleApi from "./SimpleApi";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Context } from "./Context";
 import { useState } from "react";
-
+import "./style/Nav.css";
+import "./style/TodoList.css";
 function App() {
   const [navCount, setNavCount] = useState(0);
   return (

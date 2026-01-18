@@ -10,13 +10,13 @@ const CompletedList = ({
     setList((prev) => [...prev, back]);
   };
   return (
-    <div>
+    <div className="completed-list">
       <h1>Completed List : Tasks {completeCount}</h1>
       <div>
         {completeList.map((li, index) => {
           return (
             <p key={index}>
-              {index} {li.text}
+              {li.text}
               <button onClick={() => addBack(index)}>add back</button>
             </p>
           );

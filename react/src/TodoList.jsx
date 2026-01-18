@@ -8,6 +8,24 @@ const TodoList = () => {
   const count = list.length;
   const completeCount = completedList.length;
   const { navCount, setNavCount } = useContext(Context);
+  useEffect(() => {
+    const savedList = localStorage.getItem("todoList");
+    const savedCompletedList = localStorage.getItem("completedList");
+
+    if (savedList) {
+      setList(JSON.parse(savedList));
+    }
+    if (savedCompletedList) {
+      setCompletedList(JSON.parse(savedCompletedList));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (list.length > 0 || completedList.length > 0) {
+      localStorage.setItem("todoList", JSON.stringify(list));
+      localStorage.setItem("completedList", JSON.stringify(completedList));
+    }
+  }, [list, completedList]);
 
   useEffect(() => {
     setNavCount(count + completeCount);
@@ -50,10 +68,9 @@ const TodoList = () => {
           {list.map((item, index) => {
             return (
               <li key={index}>
-                {index}
                 {item.text}
                 <button onClick={() => deleteTask(index)}> Delete</button>
-                <button onClick={() => taskStatus(index)}>Status</button>
+                <button onClick={() => taskStatus(index)}>Complete</button>
               </li>
             );
           })}
