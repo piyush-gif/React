@@ -7,8 +7,8 @@ const NavBar = ({ count }) => {
     <nav className="nav">
       <Link to="/">Home</Link>
       <Link to="/questions">Questions</Link>
-      <Link to="/characters">characters</Link>
-      <Link to="/login">login</Link>
+      <Link to="/characters">Characters</Link>
+      <Link to="/login">Login</Link>
       <p>Total count: {navCount}</p>
     </nav>
   );
