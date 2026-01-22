@@ -5,8 +5,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const handleLogin = async () => {
+    setError("");
     try {
+      setLoading(true);
+      if (username === "" || password === "") {
+        setError("Please enter username and password");
+        return;
+      }
       const response = await fetch(
         "https://testapi.arctern.everestwalk.com/main/api/v1/auth/login",
         {
@@ -15,16 +23,28 @@ const Login = () => {
           body: JSON.stringify({ username, password }),
         },
       );
+
+      console.log(response);
+      if (!response.ok) throw new Error("Login failed");
       const data = await response.json();
+      if (!data.data) {
+        throw new Error(data.message || "Invalid reponse");
+      }
+      console.log(data.data);
       setAccessToken(data.data.accessToken);
-      console.log(data);
     } catch (error) {
-      console.error("failed to login error : ", { error });
+      console.error(error.message);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleFetch = async () => {
+    setError("");
     try {
+      setLoading(true);
+      if (accessToken === "") return;
       const response = await fetch(
         "https://testapi.arctern.everestwalk.com/main/api/v1/users/profile",
         {
@@ -35,15 +55,22 @@ const Login = () => {
           },
         },
       );
+      if (!response.ok) throw new Error("failed to fetch data");
       const data = await response.json();
+      if (!data) {
+        throw new Error(data.message || "Failed to load data");
+      }
       setUserData(data);
-      console.log(data);
     } catch (error) {
-      console.error("failed to fetch data error : ", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <div>
+      {error && <div>Error: {error}</div>}
+      {loading && <div>Loading...</div>}
       <div>
         <input
           value={username}
@@ -52,6 +79,7 @@ const Login = () => {
         <input
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleLogin()}
         ></input>
         <button onClick={handleLogin}>Login</button>
       </div>

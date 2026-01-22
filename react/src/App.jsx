@@ -3,6 +3,7 @@ import NavBar from "./NavBar";
 import FlashCard from "./FlashCard";
 import SimpleApi from "./SimpleApi";
 import Login from "./Login";
+import UserProfile from "./UserProfile";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Context } from "./Context";
 import { useState } from "react";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/questions" element={<FlashCard />} />
           <Route path="/characters" element={<SimpleApi />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/Profile" element={<UserProfile />} />
         </Routes>
       </Context.Provider>
     </BrowserRouter>
