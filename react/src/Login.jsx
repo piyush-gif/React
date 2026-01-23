@@ -23,15 +23,21 @@ const Login = () => {
           body: JSON.stringify({ username, password }),
         },
       );
-
-      console.log(response);
       if (!response.ok) throw new Error("Login failed");
       const data = await response.json();
       if (!data.data) {
         throw new Error(data.message || "Invalid reponse");
       }
-      console.log(data.data);
       setAccessToken(data.data.accessToken);
+      console.log(data.data);
+      localStorage.setItem(
+        "accessToken",
+        JSON.stringify(data.data.accessToken),
+      );
+      localStorage.setItem(
+        "refreshToken",
+        JSON.stringify(data.data.refreshToken),
+      );
     } catch (error) {
       console.error(error.message);
       setError(error.message);
