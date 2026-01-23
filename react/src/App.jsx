@@ -20,7 +20,7 @@ function App() {
           <Route path="/questions" element={<FlashCard />} />
           <Route path="/characters" element={<SimpleApi />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Profile" element={<UserProfile />} />
+          <Route path="/profile" element={<UserProfile />} />
         </Routes>
       </Context.Provider>
     </BrowserRouter>
