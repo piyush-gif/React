@@ -39,9 +39,32 @@ const SimpleApi = () => {
     setCharInfo(char);
   };
   const handleSearch = async () => {
-    if (search === "") return;
-    setCurrentPage(1);
-    fetchapi(`https://rickandmortyapi.com/api/character/?name=${search}`);
+    if (!search.trim()) {
+      setError("Please enter a name");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      setCurrentPage(1);
+
+      const res = await fetch(
+        `https://rickandmortyapi.com/api/character/?name=${search}`,
+      );
+
+      if (!res.ok) {
+        throw new Error("No results found");
+      }
+
+      const data = await res.json();
+      setCharacters(data.results);
+    } catch (err) {
+      setCharacters([]);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,7 +73,10 @@ const SimpleApi = () => {
       {error && <div> error : {error}</div>}
       <input
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => {
+          setSearch(e.target.value);
+          setError(null);
+        }}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       ></input>
       <button onClick={handleSearch}>search</button>

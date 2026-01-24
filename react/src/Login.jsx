@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [username, setUserName] = useState("");
@@ -6,6 +6,13 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      navigate("/");
+    }
+  }, []);
+
   const handleLogin = async () => {
     setError("");
     try {

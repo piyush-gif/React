@@ -5,6 +5,7 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
     const handleFetch = async () => {
       setError("");
@@ -27,7 +28,6 @@ const UserProfile = () => {
         if (!data) {
           throw new Error(data.message || "Failed to load data");
         }
-        console.log(data);
         setUserData(data.data);
       } catch (error) {
         setError(error.message);
