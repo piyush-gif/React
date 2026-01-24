@@ -4,7 +4,19 @@ const Blog = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
-  const [blogData, setBlogData] = useState("");
+  const [blogData, setBlogData] = useState([]);
+  const [page, setPage] = useState(1);
+  const itemPerPage = 3;
+  const totalPages = Math.ceil(blogData.length / itemPerPage);
+  const startPage = (page - 1) * itemPerPage;
+  const endPage = startPage + itemPerPage;
+  const pagination = blogData.slice(startPage, endPage);
+
+  const fetched = async () => {
+    const response = await fetch("http://localhost:3000/data", {});
+    const data = await response.json();
+    setBlogData(data);
+  };
 
   const handleSubmit = async () => {
     const response = await fetch("http://localhost:3000/data", {
@@ -13,14 +25,14 @@ const Blog = () => {
       body: JSON.stringify({ title, author, body }),
     });
     if (!response.ok) throw Error("Server error");
+    await fetched();
+    setPage(1);
+    setTitle("");
+    setAuthor("");
+    setBody("");
   };
 
   useEffect(() => {
-    const fetched = async () => {
-      const response = await fetch("http://localhost:3000/data", {});
-      const data = await response.json();
-      setBlogData(data);
-    };
     fetched();
   }, []);
   return (
@@ -35,23 +47,38 @@ const Blog = () => {
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         ></textarea>
-        <button onClick={handleSubmit}>submit</button>
+        <button onClick={handleSubmit} disabled={!title || !author || !body}>
+          submit
+        </button>
       </div>
 
       <div>
         <p>Blogs from json</p>
         {blogData &&
-          blogData.map((blogs) => {
+          pagination.map((blogs) => {
             return (
-              <div>
+              <div key={blogs.id}>
+                <p>{blogs.id}</p>
                 <p>{blogs.title}</p>
                 <p> {blogs.author}</p>
                 <p>{blogs.body}</p>
               </div>
             );
           })}
+        <button
+          onClick={() => setPage((prev) => prev - 1)}
+          disabled={page === 1}
+        >
+          prev
+        </button>
+        {page}
+        <button
+          onClick={() => setPage((prev) => prev + 1)}
+          disabled={page >= totalPages}
+        >
+          next
+        </button>
       </div>
     </div>
   );

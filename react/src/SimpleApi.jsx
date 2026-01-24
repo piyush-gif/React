@@ -6,10 +6,11 @@ const SimpleApi = () => {
   const [charInfo, setCharInfo] = useState(null);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [statusFilter, setStatusFilter] = useState("all");
+
   const itemsPerPage = 3;
   const startPage = (currentPage - 1) * itemsPerPage;
   const endPage = startPage + itemsPerPage;
-  const [statusFilter, setStatusFilter] = useState("all");
   const filteredCharacters =
     statusFilter === "all"
       ? characters

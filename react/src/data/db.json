@@ -1,5 +1,34 @@
 {
   "data": [
-   
+    {
+      "title": "Learning React the Hard Way",
+      "author": "Alex Morgan",
+      "body": "I broke my app five times today, and somehow learned more than any tutorial",
+      "id": 1
+    },
+    {
+      "title": "Why Pagination Matters",
+      "author": "Sam Patel",
+      "body": "Loading everything at once feels easy until your app slows to a crawl.",
+      "id": 2
+    },
+    {
+      "title": "Bugs Are Teachers",
+      "author": "Jamie Lee",
+      "body": "Every error message is just the code asking you to think a little deeper.",
+      "id": 3
+    },
+    {
+      "title": "Fetch, Fail, Fix",
+      "author": "Taylor Nguyen",
+      "body": "Most of frontend work is waiting for APIs and fixing what comes back wrong.",
+      "id": 4
+    },
+    {
+      "title": "Small Wins in JavaScript",
+      "author": "Chris Walker",
+      "body": "When the UI finally updates correctly, it feels better than it should.",
+      "id": 5
+    }
   ]
 }
