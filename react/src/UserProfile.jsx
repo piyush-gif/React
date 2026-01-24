@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
   const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     const handleFetch = async () => {
       setError("");
@@ -37,6 +37,12 @@ const UserProfile = () => {
     };
     handleFetch();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    navigate("/");
+  };
   return (
     <div>
       {error && <div>Error: {error}</div>}
@@ -51,6 +57,7 @@ const UserProfile = () => {
           </div>
         )}
       </div>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

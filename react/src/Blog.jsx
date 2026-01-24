@@ -4,6 +4,7 @@ const Blog = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
+  const [blogData, setBlogData] = useState("");
 
   const handleSubmit = async () => {
     const response = await fetch("http://localhost:3000/data", {
@@ -14,6 +15,14 @@ const Blog = () => {
     if (!response.ok) throw Error("Server error");
   };
 
+  useEffect(() => {
+    const fetched = async () => {
+      const response = await fetch("http://localhost:3000/data", {});
+      const data = await response.json();
+      setBlogData(data);
+    };
+    fetched();
+  }, []);
   return (
     <div>
       <div>
@@ -26,8 +35,23 @@ const Blog = () => {
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
         ></textarea>
         <button onClick={handleSubmit}>submit</button>
+      </div>
+
+      <div>
+        <p>Blogs from json</p>
+        {blogData &&
+          blogData.map((blogs) => {
+            return (
+              <div>
+                <p>{blogs.title}</p>
+                <p> {blogs.author}</p>
+                <p>{blogs.body}</p>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
