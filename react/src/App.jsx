@@ -4,6 +4,7 @@ import FlashCard from "./FlashCard";
 import SimpleApi from "./SimpleApi";
 import Login from "./Login";
 import UserProfile from "./UserProfile";
+import Blog from "./Blog";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Context } from "./Context";
 import { useState } from "react";
@@ -21,6 +22,7 @@ function App() {
           <Route path="/characters" element={<SimpleApi />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<UserProfile />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
       </Context.Provider>
     </BrowserRouter>

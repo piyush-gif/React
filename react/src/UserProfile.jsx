@@ -28,7 +28,7 @@ const UserProfile = () => {
           throw new Error(data.message || "Failed to load data");
         }
         console.log(data);
-        setUserData(data);
+        setUserData(data.data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -41,7 +41,16 @@ const UserProfile = () => {
     <div>
       {error && <div>Error: {error}</div>}
       {loading && <div>Loading...</div>}
-      <div>{userData && <div>{userData.data.firstName}</div>}</div>
+      <div>
+        {userData && (
+          <div>
+            <p>First name : {userData.firstName}</p>
+            <p>city : {userData.partner.city}</p>
+            <p>status: {userData.status}</p>
+            <p>employee Id: {userData.employeeId}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
