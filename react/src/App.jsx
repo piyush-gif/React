@@ -10,6 +10,7 @@ import { Context } from "./Context";
 import { useState } from "react";
 import "./style/Nav.css";
 import "./style/TodoList.css";
+import "./style/index.css";
 function App() {
   const [navCount, setNavCount] = useState(0);
   return (

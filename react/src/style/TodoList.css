@@ -1,32 +1,8 @@
-input {
-  padding: 2px;
-  margin-right: 10px;
+.todo-container{
+  text-align: center;
 }
 
-button {
-  padding: 2px 5px;
-  margin-left: 5px;
-}
+.todo-component h1{
+  
 
-button:hover{
-  color: #007bff;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #f5f5f5;
-}
-
-.completed-list p {
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #e8f5e9;
-  text-decoration: line-through;
-  color: #666;
 }

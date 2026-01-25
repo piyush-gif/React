@@ -35,6 +35,14 @@ const Blog = () => {
   useEffect(() => {
     fetched();
   }, []);
+
+  const handleDelete = async (id) => {
+    const response = await fetch(`http://localhost:3000/data/${id}`, {
+      method: "DELETE",
+    });
+    await fetched();
+  };
+
   return (
     <div>
       <div>
@@ -63,6 +71,7 @@ const Blog = () => {
                 <p>{blogs.title}</p>
                 <p> {blogs.author}</p>
                 <p>{blogs.body}</p>
+                <button onClick={() => handleDelete(blogs.id)}>Delete</button>
               </div>
             );
           })}

@@ -48,8 +48,8 @@ const TodoList = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className="todo-container">
+      <div className="todo-component">
         <CompletedList
           completeList={completedList}
           setList={setList}
