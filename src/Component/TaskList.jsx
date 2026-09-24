@@ -1,15 +1,11 @@
 import TaskItem from "./TaskItem";
-const TaskList = ({ data, setData }) => {
+const TaskList = ({ data, dispatch }) => {
   const handleDelete = (id) => {
-    const filteredData = data.filter((task) => task.id !== id);
-    setData(filteredData);
+    dispatch({ type: "Delete_Item", payload: id });
   };
 
   const handleToggleComplete = (id) => {
-    const updatedData = data.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task,
-    );
-    setData(updatedData);
+    dispatch({ type: "Toggle_Item", payload: id });
   };
 
   return (
@@ -21,6 +17,7 @@ const TaskList = ({ data, setData }) => {
           index={index}
           handleDelete={handleDelete}
           handleToggleComplete={handleToggleComplete}
+          dispatch={dispatch}
         />
       ))}
     </div>
