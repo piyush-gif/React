@@ -1,5 +1,9 @@
+import { useContext } from "react";
 import TaskItem from "./TaskItem";
-const TaskList = ({ data, dispatch }) => {
+import { DispatchContext, DataContext } from "../context/ReducerContext";
+const TaskList = () => {
+  const data = useContext(DataContext);
+  const dispatch = useContext(DispatchContext);
   const handleDelete = (id) => {
     dispatch({ type: "Delete_Item", payload: id });
   };
@@ -17,7 +21,6 @@ const TaskList = ({ data, dispatch }) => {
           index={index}
           handleDelete={handleDelete}
           handleToggleComplete={handleToggleComplete}
-          dispatch={dispatch}
         />
       ))}
     </div>

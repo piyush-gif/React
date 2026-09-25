@@ -1,14 +1,11 @@
-import { useState } from "react";
-const TaskItem = ({
-  TaskItems,
-  index,
-  handleDelete,
-  handleToggleComplete,
-  dispatch,
-}) => {
+import { useContext, useState } from "react";
+import { ThemeContext } from "../context/ThemeContext";
+import { DispatchContext } from "../context/ReducerContext";
+const TaskItem = ({ TaskItems, index, handleDelete, handleToggleComplete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState(TaskItems.name);
-
+  const { theme } = useContext(ThemeContext);
+  const dispatch = useContext(DispatchContext);
   const handleSave = () => {
     if (draft.trim() === "") {
       return;
@@ -24,6 +21,7 @@ const TaskItem = ({
 
   return (
     <div>
+      <p>{theme}</p>
       <p>{index + 1}</p>
       {isEditing ? (
         <div>

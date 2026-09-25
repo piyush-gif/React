@@ -1,40 +1,20 @@
 import "./App.css";
 import TaskList from "./Component/TaskList";
-import { useEffect, useState, useReducer } from "react";
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "Add_Item":
-      return [...state, action.payload];
-    case "Delete_Item":
-      return state.filter((item) => item.id !== action.payload);
-    case "Toggle_Item":
-      return state.map((item) =>
-        item.id === action.payload
-          ? { ...item, completed: !item.completed }
-          : item,
-      );
-    case "Edit_Item":
-      return state.map((task) =>
-        task.id === action.payload.id
-          ? { ...task, name: action.payload.name }
-          : task,
-      );
-    default:
-      return state;
-  }
-}
-const loadData = (storageName) => {
-  const parsed = localStorage.getItem(storageName);
-  return parsed ? JSON.parse(parsed) : [];
-};
+import { useEffect, useState, useContext } from "react";
+import { ThemeContext } from "./context/ThemeContext";
+import { CountContext } from "./context/CountContext";
+import { DataContext, DispatchContext } from "./context/ReducerContext";
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, "data", loadData);
+  const data = useContext(DataContext);
+  const dispatch = useContext(DispatchContext);
+  const { count, setCount } = useContext(CountContext);
+  const { theme, setTheme } = useContext(ThemeContext);
   const [input, setInput] = useState("");
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(data));
+    setCount(data.length);
   }, [data]);
 
   const handleAdd = () => {
@@ -45,12 +25,18 @@ function App() {
     setInput("");
   };
 
+  const handleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
   return (
-    <>
+    <div className={theme}>
+      <p>Count {count}</p>
+      <button onClick={handleTheme}>switch</button>
       <input value={input} onChange={(e) => setInput(e.target.value)} />
       <button onClick={handleAdd}>Add</button>
-      <TaskList data={data} dispatch={dispatch} />
-    </>
+      <TaskList />
+    </div>
   );
 }
 
