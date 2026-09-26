@@ -1,20 +1,48 @@
-import { useContext } from "react";
+import { useContext, useState, memo, useCallback, useMemo } from "react";
 import TaskItem from "./TaskItem";
 import { DispatchContext, DataContext } from "../context/ReducerContext";
-const TaskList = () => {
+const TaskList = memo(() => {
   const data = useContext(DataContext);
   const dispatch = useContext(DispatchContext);
-  const handleDelete = (id) => {
-    dispatch({ type: "Delete_Item", payload: id });
-  };
+  const [filter, setFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("newest");
 
-  const handleToggleComplete = (id) => {
-    dispatch({ type: "Toggle_Item", payload: id });
-  };
+  const filteredData = useMemo(() => {
+    return data.filter((task) => {
+      if (filter === "active") return !task.completed;
+      if (filter === "completed") return task.completed;
+      return true;
+    });
+  }, [data, filter]);
+
+  const sortedData = useMemo(() => {
+    return [...filteredData].sort((a, b) => {
+      if (sortOrder === "newest") return b.id - a.id;
+      return a.id - b.id;
+    });
+  }, [filteredData, sortOrder]);
+  const handleDelete = useCallback(
+    (id) => {
+      dispatch({ type: "Delete_Item", payload: id });
+    },
+    [dispatch],
+  );
+
+  const handleToggleComplete = useCallback(
+    (id) => {
+      dispatch({ type: "Toggle_Item", payload: id });
+    },
+    [dispatch],
+  );
 
   return (
     <div>
-      {data.map((TaskItems, index) => (
+      <button onClick={() => setFilter("all")}>all</button>
+      <button onClick={() => setFilter("active")}>active</button>
+      <button onClick={() => setFilter("completed")}>completed</button>
+      <button onClick={() => setSortOrder("newest")}>newest</button>
+      <button onClick={() => setSortOrder("oldest")}>oldest</button>
+      {sortedData.map((TaskItems, index) => (
         <TaskItem
           key={TaskItems.id}
           TaskItems={TaskItems}
@@ -25,6 +53,6 @@ const TaskList = () => {
       ))}
     </div>
   );
-};
+});
 
 export default TaskList;
